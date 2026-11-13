@@ -1,0 +1,17 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="IslandBackground" Color="#000000" />
+    <SolidColorBrush x:Key="IslandBorder" Color="#2B2D38" />
+    <SolidColorBrush x:Key="PrimaryText" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="SecondaryText" Color="#9A9DAD" />
+    <SolidColorBrush x:Key="ChipBackground" Color="#1C1D26" />
+    <SolidColorBrush x:Key="ChipHover" Color="#2A2C3A" />
+    <SolidColorBrush x:Key="Accent" Color="#5B8CFF" />
+    <SolidColorBrush x:Key="AccentText" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="WindowBackground" Color="#14151C" />
+    <SolidColorBrush x:Key="CardBackground" Color="#1D1E28" />
+    <SolidColorBrush x:Key="CardBorder" Color="#2C2E3B" />
+    <SolidColorBrush x:Key="SwitchOff" Color="#3B3D4C" />
+    <SolidColorBrush x:Key="Good" Color="#34C759" />
+    <SolidColorBrush x:Key="Danger" Color="#FF5A52" />
+</ResourceDictionary>

@@ -1,0 +1,26 @@
+Ztoll - NOTICE
+
+Ztoll is a Windows application (WPF / .NET 8) that is a derivative work of,
+and is inspired by, the macOS application "Atoll" (DynamicIsland) version 2.3.3:
+
+    https://github.com/Ebullioscopic/Atoll
+    Copyright (C) 2024-2026 Atoll Contributors
+
+Atoll in turn includes software derived from the boring.notch project,
+licensed under the GNU General Public License v3.0:
+
+    https://github.com/TheBoredTeam/boring.notch
+
+Ztoll is distributed under the GNU General Public License v3.0. See the
+LICENSE file (installed as LICENSE.txt) for the full license text.
+This program comes with ABSOLUTELY NO WARRANTY.
+
+Ztoll is not affiliated with, endorsed by, or sponsored by the Atoll authors,
+the boring.notch authors, or Apple Inc. "Dynamic Island" is a trademark of
+Apple Inc. and is used here only descriptively.
+
+Artwork: The Ztoll icon and logo are original works created for Ztoll.
+No artwork from the Atoll project (see its COPYRIGHT_ASSETS file) is used.
+
+Original authors' copyright notices are retained. Modifications and the Windows
+port are Copyright (C) Ztoll contributors.

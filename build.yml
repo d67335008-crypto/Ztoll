@@ -1,0 +1,101 @@
+name: Build Ztoll
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Compute version
+        shell: pwsh
+        run: |
+          if ($env:GITHUB_REF -like 'refs/tags/v*') {
+            $v = $env:GITHUB_REF_NAME.TrimStart('v')
+          } else {
+            $v = "0.1.0.$env:GITHUB_RUN_NUMBER"
+          }
+          "ZTOLL_VERSION=$v" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Host "Version: $v"
+
+      - name: Restore
+        run: dotnet restore Ztoll.sln
+
+      - name: Build (Release)
+        run: dotnet build Ztoll.sln -c Release --no-restore -p:Version=$env:ZTOLL_VERSION
+
+      - name: Test
+        run: dotnet test tests/Ztoll.Tests/Ztoll.Tests.csproj -c Release --no-build --logger "trx;LogFileName=test-results.trx"
+
+      - name: Publish self-contained single-file Ztoll.exe
+        run: >
+          dotnet publish src/Ztoll/Ztoll.csproj -c Release -r win-x64 --self-contained true
+          -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true -p:DebugType=None -p:DebugSymbols=false
+          -p:Version=$env:ZTOLL_VERSION -o publish
+
+      - name: Show published files
+        shell: pwsh
+        run: Get-ChildItem publish | Format-Table Name, Length
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) {
+            choco install innosetup --no-progress -y
+          }
+          if (-not (Test-Path $iscc)) { throw "ISCC.exe not found" }
+
+      - name: Build installer (Ztoll Setup.exe)
+        shell: pwsh
+        run: |
+          & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" "/DMyAppVersion=$env:ZTOLL_VERSION" installer\Ztoll.iss
+          if ($LASTEXITCODE -ne 0) { throw "Inno Setup failed" }
+          Get-ChildItem dist | Format-Table Name, Length
+
+      - name: Upload Ztoll.exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ztoll-exe
+          path: |
+            publish/Ztoll.exe
+            publish/LICENSE.txt
+            publish/NOTICE.txt
+
+      - name: Upload Ztoll Setup.exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ztoll-Setup
+          path: dist/Ztoll Setup.exe
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: tests/Ztoll.Tests/TestResults/*.trx
+          if-no-files-found: ignore
+
+      - name: Create GitHub release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/Ztoll Setup.exe
+            publish/Ztoll.exe

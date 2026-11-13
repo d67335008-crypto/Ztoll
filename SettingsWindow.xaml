@@ -1,0 +1,201 @@
+<Window x:Class="Ztoll.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ztoll Settings"
+        Width="640" Height="760" MinWidth="560" MinHeight="520"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBackground}"
+        Foreground="{DynamicResource PrimaryText}"
+        FontFamily="{StaticResource UiFont}" FontSize="14"
+        UseLayoutRounding="True">
+    <Window.Icon>
+        <BitmapImage UriSource="pack://application:,,,/Assets/Ztoll.png" />
+    </Window.Icon>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28,22,28,28">
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,18">
+                <Image Source="pack://application:,,,/Assets/Ztoll.png" Width="44" Height="44" />
+                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="Ztoll Settings" FontSize="22" FontWeight="SemiBold" />
+                    <TextBlock x:Name="VersionText" FontSize="12" Foreground="{DynamicResource SecondaryText}" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Appearance -->
+            <TextBlock Text="APPEARANCE" Style="{StaticResource SectionTitle}" />
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <Grid Margin="0,12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Theme" Style="{StaticResource RowTitle}" />
+                            <TextBlock Text="System follows the Windows app mode." Style="{StaticResource RowDescription}" />
+                        </StackPanel>
+                        <Border HorizontalAlignment="Right" CornerRadius="10" Background="{DynamicResource ChipBackground}" Padding="3">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton x:Name="ThemeSystem" Content="System" GroupName="Theme" Tag="System" Style="{StaticResource SegmentRadio}" Checked="Theme_Checked" />
+                                <RadioButton x:Name="ThemeDark" Content="Dark" GroupName="Theme" Tag="Dark" Style="{StaticResource SegmentRadio}" Checked="Theme_Checked" />
+                                <RadioButton x:Name="ThemeLight" Content="Light" GroupName="Theme" Tag="Light" Style="{StaticResource SegmentRadio}" Checked="Theme_Checked" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                    <Separator Background="{DynamicResource CardBorder}" />
+                    <Grid Margin="0,12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Island opacity" Style="{StaticResource RowTitle}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock x:Name="OpacityValue" Width="48" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{DynamicResource SecondaryText}" />
+                            <Slider x:Name="OpacitySlider" Style="{StaticResource ZtollSlider}" Minimum="0.5" Maximum="1" ValueChanged="OpacitySlider_ValueChanged" />
+                        </StackPanel>
+                    </Grid>
+                    <Separator Background="{DynamicResource CardBorder}" />
+                    <Grid Margin="0,12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Animation speed" Style="{StaticResource RowTitle}" />
+                            <TextBlock Text="Higher is faster." Style="{StaticResource RowDescription}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock x:Name="SpeedValue" Width="48" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{DynamicResource SecondaryText}" />
+                            <Slider x:Name="SpeedSlider" Style="{StaticResource ZtollSlider}" Minimum="0.5" Maximum="2" ValueChanged="SpeedSlider_ValueChanged" />
+                        </StackPanel>
+                    </Grid>
+                    <Separator Background="{DynamicResource CardBorder}" />
+                    <Grid Margin="0,12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Distance from top edge" Style="{StaticResource RowTitle}" />
+                            <TextBlock Text="0 attaches the island to the top of the screen." Style="{StaticResource RowDescription}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock x:Name="OffsetValue" Width="48" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{DynamicResource SecondaryText}" />
+                            <Slider x:Name="OffsetSlider" Style="{StaticResource ZtollSlider}" Minimum="0" Maximum="60" TickFrequency="1" IsSnapToTickEnabled="True" ValueChanged="OffsetSlider_ValueChanged" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Behavior -->
+            <TextBlock Text="BEHAVIOR" Style="{StaticResource SectionTitle}" />
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <Grid Margin="0,12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Expand on hover" Style="{StaticResource RowTitle}" />
+                            <TextBlock Text="Move the pointer over the island to open it." Style="{StaticResource RowDescription}" />
+                        </StackPanel>
+                        <CheckBox x:Name="HoverExpandSwitch" Style="{StaticResource SwitchCheckBox}" HorizontalAlignment="Right" Click="Switch_Click" />
+                    </Grid>
+                    <Separator Background="{DynamicResource CardBorder}" />
+                    <Grid Margin="0,12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Expand on click" Style="{StaticResource RowTitle}" />
+                        </StackPanel>
+                        <CheckBox x:Name="ClickExpandSwitch" Style="{StaticResource SwitchCheckBox}" HorizontalAlignment="Right" Click="Switch_Click" />
+                    </Grid>
+                    <Separator Background="{DynamicResource CardBorder}" />
+                    <Grid Margin="0,12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Hover delay" Style="{StaticResource RowTitle}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock x:Name="HoverDelayValue" Width="64" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{DynamicResource SecondaryText}" />
+                            <Slider x:Name="HoverDelaySlider" Style="{StaticResource ZtollSlider}" Minimum="0" Maximum="600" TickFrequency="10" IsSnapToTickEnabled="True" ValueChanged="HoverDelaySlider_ValueChanged" />
+                        </StackPanel>
+                    </Grid>
+                    <Separator Background="{DynamicResource CardBorder}" />
+                    <Grid Margin="0,12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Auto-collapse delay" Style="{StaticResource RowTitle}" />
+                            <TextBlock Text="How long the island stays open after the pointer leaves." Style="{StaticResource RowDescription}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock x:Name="CollapseValue" Width="64" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{DynamicResource SecondaryText}" />
+                            <Slider x:Name="CollapseSlider" Style="{StaticResource ZtollSlider}" Minimum="200" Maximum="4000" TickFrequency="100" IsSnapToTickEnabled="True" ValueChanged="CollapseSlider_ValueChanged" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Clock & battery -->
+            <TextBlock Text="CLOCK AND BATTERY" Style="{StaticResource SectionTitle}" />
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <Grid Margin="0,12">
+                        <TextBlock Text="24-hour clock" Style="{StaticResource RowTitle}" VerticalAlignment="Center" />
+                        <CheckBox x:Name="Use24Switch" Style="{StaticResource SwitchCheckBox}" HorizontalAlignment="Right" Click="Switch_Click" />
+                    </Grid>
+                    <Separator Background="{DynamicResource CardBorder}" />
+                    <Grid Margin="0,12">
+                        <TextBlock Text="Show seconds" Style="{StaticResource RowTitle}" VerticalAlignment="Center" />
+                        <CheckBox x:Name="SecondsSwitch" Style="{StaticResource SwitchCheckBox}" HorizontalAlignment="Right" Click="Switch_Click" />
+                    </Grid>
+                    <Separator Background="{DynamicResource CardBorder}" />
+                    <Grid Margin="0,12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Show battery" Style="{StaticResource RowTitle}" />
+                            <TextBlock Text="On PCs without a battery the island shows the power source instead." Style="{StaticResource RowDescription}" />
+                        </StackPanel>
+                        <CheckBox x:Name="BatterySwitch" Style="{StaticResource SwitchCheckBox}" HorizontalAlignment="Right" Click="Switch_Click" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Shortcut -->
+            <TextBlock Text="GLOBAL SHORTCUT" Style="{StaticResource SectionTitle}" />
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <Grid Margin="0,12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Enable shortcut" Style="{StaticResource RowTitle}" />
+                            <TextBlock Text="Opens or closes the island from anywhere." Style="{StaticResource RowDescription}" />
+                        </StackPanel>
+                        <CheckBox x:Name="HotkeySwitch" Style="{StaticResource SwitchCheckBox}" HorizontalAlignment="Right" Click="Switch_Click" />
+                    </Grid>
+                    <Separator Background="{DynamicResource CardBorder}" />
+                    <Grid Margin="0,12">
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Shortcut" Style="{StaticResource RowTitle}" />
+                            <TextBlock x:Name="HotkeyStatus" Style="{StaticResource RowDescription}" />
+                        </StackPanel>
+                        <TextBox x:Name="HotkeyBox" Width="180" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                 IsReadOnly="True" IsReadOnlyCaretVisible="False" TextAlignment="Center" Padding="8,7"
+                                 Background="{DynamicResource ChipBackground}" Foreground="{DynamicResource PrimaryText}"
+                                 BorderBrush="{DynamicResource CardBorder}" Cursor="Hand"
+                                 ToolTip="Click, then press the new key combination (Esc cancels)"
+                                 PreviewKeyDown="HotkeyBox_PreviewKeyDown" GotKeyboardFocus="HotkeyBox_GotFocus" LostKeyboardFocus="HotkeyBox_LostFocus" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- System -->
+            <TextBlock Text="SYSTEM" Style="{StaticResource SectionTitle}" />
+            <Border Style="{StaticResource Card}">
+                <Grid Margin="0,12">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Launch Ztoll at sign-in" Style="{StaticResource RowTitle}" />
+                        <TextBlock x:Name="AutostartStatus" Style="{StaticResource RowDescription}" />
+                    </StackPanel>
+                    <CheckBox x:Name="AutostartSwitch" Style="{StaticResource SwitchCheckBox}" HorizontalAlignment="Right" Click="AutostartSwitch_Click" />
+                </Grid>
+            </Border>
+
+            <!-- About -->
+            <TextBlock Text="ABOUT" Style="{StaticResource SectionTitle}" />
+            <Border Style="{StaticResource Card}" Padding="18,14">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource SecondaryText}" FontSize="12.5" LineHeight="19"
+                               Text="Ztoll is free software licensed under the GNU General Public License v3.0, with NO WARRANTY. It is a Windows port inspired by Atoll (c) Atoll Contributors, which is derived from boring.notch. Not affiliated with or endorsed by those projects or Apple Inc." />
+                    <WrapPanel Margin="0,14,0,0">
+                        <Button Content="License (GPL-3.0)" Style="{StaticResource PillButton}" Margin="0,0,8,8" Click="OpenLicense_Click" />
+                        <Button Content="Notice" Style="{StaticResource PillButton}" Margin="0,0,8,8" Click="OpenNotice_Click" />
+                        <Button Content="Original Atoll" Style="{StaticResource PillButton}" Margin="0,0,8,8" Click="OpenAtoll_Click" />
+                        <Button Content="boring.notch" Style="{StaticResource PillButton}" Margin="0,0,8,8" Click="OpenBoringNotch_Click" />
+                        <Button Content="Settings folder" Style="{StaticResource PillButton}" Margin="0,0,8,8" Click="OpenSettingsFolder_Click" />
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <Button Content="Reset all settings to defaults" Style="{StaticResource PillButton}" HorizontalAlignment="Left" Click="Reset_Click" />
+        </StackPanel>
+    </ScrollViewer>
+</Window>
